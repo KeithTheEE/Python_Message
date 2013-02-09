@@ -25,3 +25,5 @@ The way I use this setup is as follows
   After the program completes, and I'm at the end of main()
   I call doneTextSend(start_Time, get_time(), process_Name)
   where process_Name is a string for my reference later on.
+
+Bear with me, I'm new to github. 
