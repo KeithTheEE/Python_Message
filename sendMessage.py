@@ -132,7 +132,12 @@ def get_Time() :
 def show_Full_Time() :
     return strftime("%a, %d %b %Y %H:%M:%S", localtime())
     
-
+def _text_send(msg):
+    server = smtplib.SMTP(smtp_host)  
+    server.starttls()  
+    server.login(username,password)  
+    server.sendmail(fromaddr, toaddrs, msg)
+    server.quit()
 
 def show_Time(start_Time, end_Time) :
     '''
@@ -155,35 +160,20 @@ def errorTextSend(errorName) :
     msg = ('\nERROR\nProcess: Errored Out\n' + str(errorName))
   
     # The actual mail send  
-    server = smtplib.SMTP(smtp_host)  
-    server.starttls()  
-    server.login(username,password)  
-    server.sendmail(fromaddr, toaddrs, msg)
-    server.quit()
-    
+    _text_send(msg)
 
 def doneTextSend(start_Time, end_Time, process) :
     '''
     function takes the start and end time (both are floating points) of whatever your function is,
     and the function title (string). 
     '''
-    timeUsed = end_Time - start_Time
-    hoursHold = int(timeUsed / 3600)
-    minutesHold = int(timeUsed / 60 - int(hoursHold * 60))
-    secondsHold = int(timeUsed - int(minutesHold*60))
-    formatedTime = str(hoursHold) + ':' + str(minutesHold) + ':' + str(secondsHold)
-
+    formatedTime = show_Time(start_Time, end_Time)
     
     msg = ('\nDONE\nProcess: ' + str(process) + '\nTime required: '  + str(formatedTime))
   
   
     # The actual mail send  
-    server = smtplib.SMTP(smtp_host)  
-    server.starttls()  
-    server.login(username,password)  
-    server.sendmail(fromaddr, toaddrs, msg)  
-    server.quit()
-
+    _text_send(msg)
 
 
 
