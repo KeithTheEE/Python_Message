@@ -115,8 +115,7 @@ behind this fact, however I've never bothered to look.
 """
 
 import smtplib
-import time
-from time import gmtime, strftime, localtime
+import datetime
 
 # Credentials (if needed)
 # I recomend you create a new email account just for this
@@ -124,26 +123,25 @@ username = 'emailUserName'
 password = 'password'
 fromaddr = 'yourEmailAddress' 
 toaddrs  = 'emailAddressOfTarge@somewhere'
+smtp_host = 'smtp.gmail.com:587'
 
 def get_Time() :
-    return time.time()
+    return datetime.datetime.now()
 
 def show_Full_Time() :
-    return strftime("%a, %d %b %Y %H:%M:%S", localtime())
+    return datetime.datetime.now().strftime("%a, %d %b %Y %H:%M:%S")
     
-
+def _text_send(msg):
+    server = smtplib.SMTP(smtp_host)  
+    server.starttls()  
+    server.login(username,password)  
+    server.sendmail(fromaddr, toaddrs, msg)
+    server.quit()
 
 def show_Time(start_Time, end_Time) :
-    '''
-    THERE IS AN ERROR in this formatting. If this section is important
-    to you, correct it. It takes floating point numbers as its input.
-    '''
-    timeUsed = end_Time - start_Time
-    hoursHold = int(timeUsed / 3600)
-    minutesHold = int(timeUsed / 60 - int(hoursHold * 60))
-    secondsHold = int(timeUsed - int(minutesHold*60))
-    formatedTime = str(hoursHold) + ':' + str(minutesHold) + ':' + str(secondsHold)
-    return formatedTime
+    timeUsed = end_Time - start_Time #timedelta object
+    # http://docs.python.org/2/library/datetime.html#datetime.timedelta
+    return str(timeUsed)
 
 
 def errorTextSend(errorName) :
@@ -154,35 +152,20 @@ def errorTextSend(errorName) :
     msg = ('\nERROR\nProcess: Errored Out\n' + str(errorName))
   
     # The actual mail send  
-    server = smtplib.SMTP('smtp.gmail.com:587')  
-    server.starttls()  
-    server.login(username,password)  
-    server.sendmail(fromaddr, toaddrs, msg)
-    server.quit()
-    
+    _text_send(msg)
 
 def doneTextSend(start_Time, end_Time, process) :
     '''
     function takes the start and end time (both are floating points) of whatever your function is,
     and the function title (string). 
     '''
-    timeUsed = end_Time - start_Time
-    hoursHold = int(timeUsed / 3600)
-    minutesHold = int(timeUsed / 60 - int(hoursHold * 60))
-    secondsHold = int(timeUsed - int(minutesHold*60))
-    formatedTime = str(hoursHold) + ':' + str(minutesHold) + ':' + str(secondsHold)
-
+    formatedTime = show_Time(start_Time, end_Time)
     
     msg = ('\nDONE\nProcess: ' + str(process) + '\nTime required: '  + str(formatedTime))
   
   
     # The actual mail send  
-    server = smtplib.SMTP('smtp.gmail.com:587')  
-    server.starttls()  
-    server.login(username,password)  
-    server.sendmail(fromaddr, toaddrs, msg)  
-    server.quit()
-
+    _text_send(msg)
 
 
 
