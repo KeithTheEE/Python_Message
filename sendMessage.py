@@ -115,8 +115,7 @@ behind this fact, however I've never bothered to look.
 """
 
 import smtplib
-import time
-from time import gmtime, strftime, localtime
+import datetime
 
 # Credentials (if needed)
 # I recomend you create a new email account just for this
@@ -127,10 +126,10 @@ toaddrs  = 'emailAddressOfTarge@somewhere'
 smtp_host = 'smtp.gmail.com:587'
 
 def get_Time() :
-    return time.time()
+    return datetime.datetime.now()
 
 def show_Full_Time() :
-    return strftime("%a, %d %b %Y %H:%M:%S", localtime())
+    return datetime.datetime.now().strftime("%a, %d %b %Y %H:%M:%S")
     
 def _text_send(msg):
     server = smtplib.SMTP(smtp_host)  
@@ -140,16 +139,9 @@ def _text_send(msg):
     server.quit()
 
 def show_Time(start_Time, end_Time) :
-    '''
-    THERE IS AN ERROR in this formatting. If this section is important
-    to you, correct it. It takes floating point numbers as its input.
-    '''
-    timeUsed = end_Time - start_Time
-    hoursHold = int(timeUsed / 3600)
-    minutesHold = int(timeUsed / 60 - int(hoursHold * 60))
-    secondsHold = int(timeUsed - int(minutesHold*60))
-    formatedTime = str(hoursHold) + ':' + str(minutesHold) + ':' + str(secondsHold)
-    return formatedTime
+    timeUsed = end_Time - start_Time #timedelta object
+    # http://docs.python.org/2/library/datetime.html#datetime.timedelta
+    return str(timeUsed)
 
 
 def errorTextSend(errorName) :
