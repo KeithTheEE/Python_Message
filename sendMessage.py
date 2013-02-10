@@ -124,6 +124,7 @@ username = 'emailUserName'
 password = 'password'
 fromaddr = 'yourEmailAddress' 
 toaddrs  = 'emailAddressOfTarge@somewhere'
+smtp_host = 'smtp.gmail.com:587'
 
 def get_Time() :
     return time.time()
@@ -154,7 +155,7 @@ def errorTextSend(errorName) :
     msg = ('\nERROR\nProcess: Errored Out\n' + str(errorName))
   
     # The actual mail send  
-    server = smtplib.SMTP('smtp.gmail.com:587')  
+    server = smtplib.SMTP(smtp_host)  
     server.starttls()  
     server.login(username,password)  
     server.sendmail(fromaddr, toaddrs, msg)
@@ -177,7 +178,7 @@ def doneTextSend(start_Time, end_Time, process) :
   
   
     # The actual mail send  
-    server = smtplib.SMTP('smtp.gmail.com:587')  
+    server = smtplib.SMTP(smtp_host)  
     server.starttls()  
     server.login(username,password)  
     server.sendmail(fromaddr, toaddrs, msg)  
