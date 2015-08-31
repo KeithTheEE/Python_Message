@@ -57,7 +57,7 @@ Sprint PCS (now Sprint Nextel)	[10-digit phone number]@messaging.sprintpcs.com
 T-Mobile	                [10-digit phone number]@tmomail.net
                 Example: 1234567890@tmomail.net
 
-US Cellular	                [10-digit phone number]email.uscc.net (SMS)
+US Cellular	                [10-digit phone number]@email.uscc.net (SMS)
                                 [10-digit phone number]@mms.uscc.net (MMS)
                 Example: 1234567890@email.uscc.net
 
